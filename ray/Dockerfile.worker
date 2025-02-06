@@ -1,0 +1,9 @@
+FROM python:3.9
+
+WORKDIR /app
+
+COPY . /app
+RUN pip install --no-cache-dir ray
+
+# Connect to the head node (Change IP to match your head node's IP)
+CMD ["sh", "-c", "sleep 5 && ray start --address=ray-head:6379 --block"]

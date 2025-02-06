@@ -1,0 +1,9 @@
+FROM python:3.9
+
+WORKDIR /app
+
+COPY . /app
+RUN pip install --no-cache-dir ray
+
+# Start Ray Head Node
+CMD ["ray", "start", "--head", "--port=6379", "--dashboard-port=8265", "--block"]

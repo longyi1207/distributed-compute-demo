@@ -1,0 +1,42 @@
+version: "3"
+
+services:
+  headnode:
+    build:
+      context: .
+      dockerfile: Dockerfile.head
+    container_name: ray-head
+    ports:
+      - "6379:6379"   # Ray cluster communication
+      - "8265:8265"   # Ray dashboard
+    networks:
+      - ray-cluster
+    shm_size: '3gb'
+    volumes:
+      - /tmp/ray:/tmp/ray
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    depends_on:
+      - headnode
+    deploy:
+      replicas: 3  # Start 3 worker nodes
+    networks:
+      - ray-cluster
+    shm_size: '3gb'
+
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    depends_on:
+      - headnode
+    networks:
+      - ray-cluster
+    volumes:
+      - /tmp/ray:/tmp/ray
+networks:
+  ray-cluster:
