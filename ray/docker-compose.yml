@@ -4,7 +4,7 @@ services:
   headnode:
     build:
       context: .
-      dockerfile: Dockerfile.head
+      dockerfile: docker/Dockerfile.head
     container_name: ray-head
     ports:
       - "6379:6379"   # Ray cluster communication
@@ -18,7 +18,7 @@ services:
   worker:
     build:
       context: .
-      dockerfile: Dockerfile.worker
+      dockerfile: docker/Dockerfile.worker
     depends_on:
       - headnode
     deploy:
@@ -31,7 +31,7 @@ services:
   client:
     build:
       context: .
-      dockerfile: Dockerfile.client
+      dockerfile: docker/Dockerfile.client
     depends_on:
       - headnode
     networks:
