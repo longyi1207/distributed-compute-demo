@@ -2,7 +2,8 @@ FROM python:3.9
 
 WORKDIR /app
 
-COPY main.py /app/
+COPY . /app
 RUN pip install --no-cache-dir "ray[default]==2.42.0"
 
-CMD ["sh", "-c", "sleep 10 && python3 /app/main.py"]
+CMD ["sh", "-c", "sleep 5 && ray start --address=ray-head:6379 --block & python3 /app/client.py"]
+
