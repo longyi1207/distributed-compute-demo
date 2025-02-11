@@ -10,18 +10,18 @@ Each implementation is contained in its respective directory:
 - `celery/`
 - `kafka/`
 
-The goal of this project is to **compare these frameworks** and understand their **best use cases** for distributed systems.
+The goal of this project is to implement a demo using each of these frameworks to demonstrate their capabilities and suitability for different use cases.
 
 ---
 
 ## 🚀 **High-Level Comparison: Ray vs Celery vs Kafka**
 Each of these frameworks is designed for **different types of distributed workloads**. Here’s how they compare:
 
-| Framework  | Best Suited For | Task Model | Scalability | Ease of Use |
-|------------|---------------|------------|-------------|-------------|
-| **Ray**    | Parallel processing, ML workloads, Python-native distributed tasks | Actor-based and task-based | High (auto-scaling workers) | Easy |
-| **Celery** | Task queues, background jobs, distributed workers | Task queue-based | Moderate (requires message broker like Redis/RabbitMQ) | Easy |
-| **Kafka**  | Event-driven architectures, real-time data streaming | Publish-subscribe | High (designed for massive-scale streaming) | Moderate |
+| Framework  | Best Suited For | Task Model | Scalability | Ease of Use | Architecture |
+|------------|---------------|------------|-------------|-------------|-------------|
+| **Ray**    | Parallel processing, ML workloads, Python-native distributed tasks | Actor-based and task-based | High (auto-scaling workers) | Easy | Head-worker architecture |
+| **Celery** | Task queues, background jobs, distributed workers | Task queue-based | Moderate (requires message broker like Redis/RabbitMQ) | Easy | Worker-broker architecture |
+| **Kafka**  | Event-driven architectures, real-time data streaming | Publish-subscribe | High (designed for massive-scale streaming) | Moderate | Producer-consumer architecture |
 
 ---
 
@@ -32,32 +32,8 @@ Before running any of the implementations, ensure you have:
 
 ---
 
-## ⚡ **Ray Implementation**
-The `ray/` directory contains an example of **distributed computation using Ray**.
-
-### 🔹 **How to Run the Ray Example**
-1️⃣ **Start the Ray cluster**:
+### 🔹 **How to Run each of the Examples**
 ```bash
-docker compose -f ray/docker-compose.yml up -d
+cd <service-directory>
+docker-compose up --build
 ```
-2️⃣ Verify the Ray cluster is running:
-```bash
-ray status --address=localhost:6379
-```
-3️⃣ Expected Output: You should see logs indicating distributed tasks were processed:
-```bash
-All tasks completed:
-Processed Task-0
-Processed Task-1
-Processed Task-2
-...
-```
-4️⃣ To Shut Down the Cluster:
-```bash
-docker compose -f ray/docker-compose.yml down
-```
-
----
-## 🛠️ **Next Steps**
-- Celery Implementation (Coming Soon)
-- Kafka Implementation (Coming Soon)
