@@ -24,28 +24,18 @@ services:
       - ALLOW_PLAINTEXT_LISTENER=yes
 
 
-  worker:
-    build:
-      context: .
-      dockerfile: Dockerfile.worker
-    container_name: kafka_worker
-    depends_on:
-      - kafka
-
-  client:
-    build:
-      context: .
-      dockerfile: Dockerfile.client
-    container_name: kafka_client
-    depends_on:
-      - kafka
-    command: python producer.py
-
   producer:
     build:
       context: .
-      dockerfile: Dockerfile.client
+      dockerfile: Dockerfile.producer
     container_name: kafka_producer
     depends_on:
       - kafka
-    command: python producer.py
+
+  consumer:
+    build:
+      context: .
+      dockerfile: Dockerfile.consumer
+    container_name: kafka_consumer
+    depends_on:
+      - kafka
